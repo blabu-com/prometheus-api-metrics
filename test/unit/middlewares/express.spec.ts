@@ -5,7 +5,7 @@ import * as assert from 'assert'
 describe('parseRoute', () => {
   let e
   before(() => {
-    e = new Express({ groupParametrizedQuery: false })
+    e = new Express({ groupParametrizedQuery: true })
   })
   it('should properly return N/A when no req', () => {
     const fakeReq = {}

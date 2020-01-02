@@ -82,7 +82,7 @@ export default class Express {
       } else if (route.indexOf('*') > 0) {
         // wildcard urls, expected for static content, reported groupped
         return route
-      } else if (!this.setupOptions.groupParametrizedQuery && route.indexOf(':') > 0) {
+      } else if (this.setupOptions.groupParametrizedQuery && route.indexOf(':') > 0) {
         // parametrized urls, expected for dynamic content based on param value, reported separately
         route = req.originalUrl.split('?')[0]
       } else {
