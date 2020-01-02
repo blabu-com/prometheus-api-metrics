@@ -68,7 +68,6 @@ describe('Express Middleware', () => {
           .get('/metrics')
           .expect(200)
           .then((res) => {
-            console.log(res.text)
             expect(res.text).to.contain('method="GET",route="/hello",code="200"')
           })
       })
@@ -137,7 +136,7 @@ describe('Express Middleware', () => {
           })
       })
     })
-    describe('when calling a GET endpoint with query parmas', () => {
+    describe('when calling a GET endpoint with query params', () => {
       it('should add it to the histogram', async () => {
         await supertest(app)
           .get('/hello?test=test')
@@ -149,6 +148,36 @@ describe('Express Middleware', () => {
           .expect(200)
           .then((res) => {
             expect(res.text).to.contain('http_request_duration_seconds_bucket{le="+Inf",method="GET",route="/hello",code="200"} 3')
+          })
+      })
+    })
+    describe('when calling a GET wildcard endpoint', () => {
+      it('should add it to the histogram', async () => {
+        await supertest(app)
+          .get('/_next/static/test.js')
+          .expect(200)
+          .then((res) => {
+          })
+        return supertest(app)
+          .get('/metrics')
+          .expect(200)
+          .then((res) => {
+            expect(res.text).to.contain('http_request_size_bytes_count{method="GET",route="/_next/*",code="200"} 1')
+          })
+      })
+    })
+    describe('when calling a GET parametrized endpoint', () => {
+      it('should add it to the histogram', async () => {
+        await supertest(app)
+          .get('/parameter/joe')
+          .expect(200)
+          .then((res) => {
+          })
+        return supertest(app)
+          .get('/metrics')
+          .expect(200)
+          .then((res) => {
+            expect(res.text).to.contain('http_request_size_bytes_count{method="GET",route="/parameter/:params",code="200"} 1')
           })
       })
     })
@@ -678,7 +707,6 @@ describe('Express Middleware', () => {
         .expect(200)
         .then((res) => {
           const text = res.text
-          console.log(text)
           expect(text).to.contain('express_test_process_cpu_user_seconds_total')
           expect(text).to.contain('express_test_process_cpu_system_seconds_total')
           expect(text).to.contain('express_test_process_cpu_seconds_total')
@@ -748,7 +776,6 @@ describe('Express Middleware', () => {
           .get('/metrics')
           .expect(200)
           .then((res) => {
-            console.log(res.text)
             expect(res.text).to.contain('method="GET",route="/hello",code="200"')
           })
       })
@@ -805,7 +832,6 @@ describe('Express Middleware', () => {
           .get('/metrics')
           .expect(200)
           .then((res) => {
-            console.log(res.text)
             expect(res.text).to.contain('method="GET",route="/hello?test=<?>",code="200"')
           })
       })

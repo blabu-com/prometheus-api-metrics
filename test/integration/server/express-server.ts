@@ -1,6 +1,7 @@
 import express from 'express'
 import Prometheus, { Counter } from 'prom-client'
 import bodyParser from 'body-parser'
+
 const { ExpressMiddlewareFactory } = require('../../../src')
 
 const router = require('./router')
@@ -62,11 +63,20 @@ const factory = (config) => {
     }, req.body.delay)
   })
 
+  app.get('/_next/*', (req, res) => {
+    res.status(200)
+    res.json({ message: 'Hello World!' })
+  })
+
+  app.get('/parameter/:params', (req, res) => {
+    res.status(200)
+    res.json({ param: req.params.param })
+  })
+
 // Error handler
   app.use((err, req, res, next) => {
     res.statusCode = 500
     // Do not expose your error in production
-    console.error(err)
     res.json({ error: err.message })
   })
 

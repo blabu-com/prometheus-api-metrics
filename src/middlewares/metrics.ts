@@ -3,7 +3,7 @@ import Express from './express'
 import { debug, getMetricNames } from '../utils'
 
 export type Options = {
-  server?: any,
+  server?: any
   path?: string
   defaultMetricsInterval?: number
   durationBuckets?: any
@@ -12,11 +12,12 @@ export type Options = {
   useUniqueHistogramName?: any
   metricsPrefix?: any
   excludeRoutes?: any
-  includeQueryParams?: any,
+  includeQueryParams?: any
   responseTimeHistogram?: any
   requestSizeHistogram?: any
   responseSizeHistogram?: any
   numberOfConnectionsGauge?: any
+  groupParametrizedQuery?: any
 }
 
 export default (projectName, appVersion) => {
@@ -26,9 +27,10 @@ export default (projectName, appVersion) => {
       path: '/metrics',
       excludeRoutes: [],
       includeQueryParams: undefined,
-      defaultMetricsInterval: 10000
+      defaultMetricsInterval: 10000,
+      groupParametrizedQuery: false
     }
-    const options: Options = {...defaultOptions, ...setup}
+    const options: Options = { ...defaultOptions, ...setup }
     debug(`Init metrics middleware with options: ${JSON.stringify(options)}`)
 
     const defaultMetricNames = {
