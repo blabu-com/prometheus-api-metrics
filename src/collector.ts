@@ -34,7 +34,6 @@ export class HttpMetricsCollector {
 
   collect(res: any) {
     if (res instanceof Error && !(res as any).response && this.southboundClientErrors) {
-      console.log(res)
       const error = res['error'] || res
       this.southboundClientErrors.inc({ target: error.hostname, error: error.code })
     } else {

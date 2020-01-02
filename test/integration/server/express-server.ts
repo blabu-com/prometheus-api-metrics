@@ -77,7 +77,6 @@ const factory = (config) => {
   app.use((err, req, res, next) => {
     res.statusCode = 500
     // Do not expose your error in production
-    console.error(err)
     res.json({ error: err.message })
   })
 

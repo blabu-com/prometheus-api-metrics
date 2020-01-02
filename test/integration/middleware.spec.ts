@@ -68,7 +68,6 @@ describe('Express Middleware', () => {
           .get('/metrics')
           .expect(200)
           .then((res) => {
-            console.log(res.text)
             expect(res.text).to.contain('method="GET",route="/hello",code="200"')
           })
       })
@@ -178,7 +177,6 @@ describe('Express Middleware', () => {
           .get('/metrics')
           .expect(200)
           .then((res) => {
-            console.log(res.text)
             expect(res.text).to.contain('http_request_size_bytes_count{method="GET",route="/parameter/:params",code="200"} 1')
           })
       })
@@ -709,7 +707,6 @@ describe('Express Middleware', () => {
         .expect(200)
         .then((res) => {
           const text = res.text
-          console.log(text)
           expect(text).to.contain('express_test_process_cpu_user_seconds_total')
           expect(text).to.contain('express_test_process_cpu_system_seconds_total')
           expect(text).to.contain('express_test_process_cpu_seconds_total')
@@ -779,7 +776,6 @@ describe('Express Middleware', () => {
           .get('/metrics')
           .expect(200)
           .then((res) => {
-            console.log(res.text)
             expect(res.text).to.contain('method="GET",route="/hello",code="200"')
           })
       })
@@ -836,7 +832,6 @@ describe('Express Middleware', () => {
           .get('/metrics')
           .expect(200)
           .then((res) => {
-            console.log(res.text)
             expect(res.text).to.contain('method="GET",route="/hello?test=<?>",code="200"')
           })
       })
